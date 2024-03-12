@@ -6,7 +6,7 @@ apt-get update > /dev/null
 apt-get upgrade -y > /dev/null
 apt-get install neofetch apache2 php libapache2-mod-php -y > /dev/null
 
-echo "clear neofetch" >> $HOME/.bashrc
+echo "clear\nneofetch" >> $HOME/.bashrc
 
 site_name="${1:-my-web}"
 
