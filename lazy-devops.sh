@@ -28,7 +28,7 @@ echo "
 \$uri=\$_SERVER['REQUEST_URI'];
 
 echo \$uri;
-" > /var/www/site_name/presentation/index.php
+" > /var/www/$site_name/presentation/index.php
 
 echo "
 <VirtualHost *:80>
