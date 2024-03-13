@@ -1,15 +1,17 @@
 #!/bin/bash
 
 # install required packages
+apt-get update
+apt-get upgrade -y
+apt-get install neofetch apache2 php libapache2-mod-php -y
 
-apt-get update > /dev/null
-apt-get upgrade -y > /dev/null
-apt-get install neofetch apache2 php libapache2-mod-php -y > /dev/null
-
+# add neofetch at start
 echo "clear\nneofetch" >> $HOME/.bashrc
 
+# set site name if defined
 site_name="${1:-my-web}"
 
+# setup app directory tree
 mkdir /var/www/$site_name
 mkdir /var/www/$site_name/logic
 mkdir /var/www/$site_name/logic/config
@@ -22,6 +24,7 @@ mkdir /var/www/$site_name/presentation/css
 mkdir /var/www/$site_name/presentation/js
 mkdir /var/www/$site_name/presentation/src
 
+#create index.php
 echo "
 <?php
 
@@ -30,6 +33,7 @@ echo "
 echo \$uri;
 " > /var/www/$site_name/presentation/index.php
 
+# create config file
 echo "
 <VirtualHost *:80>
     DocumentRoot /var/www/${site_name}/presentation
@@ -45,10 +49,8 @@ echo "
 </VirtualHost>
 " > /etc/apache2/sites-available/$site_name.conf
 
-a2enmod rewrite > /dev/null
-a2dissite 000-default > /dev/null
-a2ensite $site_name > /dev/null
-
+# apply config
+a2enmod rewrite
+a2dissite 000-default
+a2ensite $site_name
 systemctl restart apache2
-
-reboot
