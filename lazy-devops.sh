@@ -2,8 +2,7 @@
 
 # install required packages
 apt-get update
-apt-get upgrade -y
-apt-get install neofetch apache2 php libapache2-mod-php -y
+apt-get install apache2 php libapache2-mod-php -y
 
 # set site name if defined
 site_name="${1:-my-web}"
@@ -52,9 +51,4 @@ a2dissite 000-default
 a2ensite $site_name
 systemctl restart apache2
 
-# add neofetch at start
-cd
-echo "
 clear
-neofetch
-" >> .bashrc
