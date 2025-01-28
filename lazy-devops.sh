@@ -30,25 +30,11 @@ echo \$uri;
 " > /var/www/$site_name/presentation/index.php
 
 # create config file
-echo "
-<VirtualHost *:80>
-    DocumentRoot /var/www/${site_name}/presentation
-    ErrorLog /var/log/apache2/${site_name}-error.log
-    CustomLog /var/log/apache2/${site_name}-access.log combined
-    <Directory /var/www/${site_name}/presentation>
-        Options -Indexes
-        DirectorySlash Off
-        RewriteEngine On
-        RewriteCond %{REQUEST_FILENAME} !-f
-        RewriteRule ^ index.php
-    </Directory>
-</VirtualHost>
-" > /etc/apache2/sites-available/$site_name.conf
+wget -O "/etc/apache2/sites-available/$site_name.conf" "https://raw.githubusercontent.com/polagustina/apache-conf/refs/heads/main/example.conf"
+sed -i "s/example/${site_name}/g" "/etc/apache2/sites-available/$site_name.conf"
 
 # apply config
 a2enmod rewrite
 a2dissite 000-default
 a2ensite $site_name
 systemctl restart apache2
-
-clear
